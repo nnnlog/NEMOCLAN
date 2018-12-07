@@ -1,0 +1,119 @@
+* {
+    font-family: 'Nanum-Gothic', sans-serif;
+!important;
+}
+
+*::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+a {
+    color: #ff4081;
+    font-weight: 500;
+}
+
+
+a:hover {
+    color: #ff4081;
+}
+
+.ghost-button {
+    transition: 1000ms;
+    padding: 10px 20px;
+    color: white;
+    background: rgba(255, 255, 255, 0);
+
+    size: 60px;
+
+    border: 2px solid white;
+
+    cursor: pointer;
+}
+
+.ghost-button:hover, .ghost-button:checked {
+    transition: 1000ms;
+
+    background: rgba(255, 255, 255, .3);
+}
+
+.menu-bar {
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+
+    color: black;
+    background: rgba(252, 252, 252, .7);
+
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 80%;
+}
+
+.menu-bar > *[class='list'] {
+    display: inline-flex;
+    justify-content: flex-start;
+}
+
+.menu-bar > *[class='list'] > a {
+    cursor: pointer;
+
+    padding: 14px 20px;
+
+    transition: 1000ms;
+}
+
+
+.menu-bar > *[class='list'] > a > p {
+    margin: 0;
+}
+
+.menu-bar > *[class='list'] > a:hover {
+    background: rgba(251, 251, 251, .6);
+    transition: 1000ms;
+}
+
+.menu-bar > *[class='list'] > a[class='active'] {
+    background: rgba(0, 0, 0, .7);
+    color: white;
+}
+
+.menu-bar > *[class='list'] > a[class='active'] > p:hover {
+    transition: 1000ms;
+    color: aquamarine;
+}
+
+.menu-bar > *[class='menu'] {
+    margin: auto 10px auto 0;
+}
+
+.menu-bar > *[class='menu'] > a {
+    color: inherit;
+}
+
+.menu-bar > *[class='menu'] > a > i {
+    cursor: pointer;
+
+    font-size: 2em;
+}
+
+.info-section {
+    width: 100%;
+
+    background: rgba(252, 252, 252, .7);
+    color: white;
+
+    font-size: 80%;
+}
+
+.info-section > article[class='article'] {
+    display: none;
+
+    background: rgba(0, 0, 0, .7);
+    padding: 10px;
+}
+
+.info-section > article[class='article']:nth-child(1) {
+    display: block;
+}
