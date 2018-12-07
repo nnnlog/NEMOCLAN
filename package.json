@@ -1,0 +1,12 @@
+{
+  "name": "NEMOCLAN",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "http": "^0.0.0",
+    "mime-types": "^2.1.20"
+  }
+}
