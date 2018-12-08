@@ -1,6 +1,5 @@
 * {
     font-family: 'Nanum-Gothic', sans-serif;
-!important;
 }
 
 *::selection {
@@ -111,7 +110,7 @@ a:hover {
     display: none;
 
     background: rgba(0, 0, 0, .7);
-    padding: 10px;
+    padding: 30px;
 }
 
 .info-section > article[class='article']:nth-child(1) {

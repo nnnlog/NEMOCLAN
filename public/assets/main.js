@@ -26,6 +26,4 @@ async function updateClickedButton_menu(element) {
             }
         }
     }
-
-
 }

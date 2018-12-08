@@ -1,10 +1,14 @@
 global.__app = __dirname;
+process.env.TZ = "Asia/Seoul";
 
 const http = require("http");
 const ModulePath = require("path");
 const mime = require("mime-types");
 const util = require("util");
 const fs = require("fs");
+const ejs = require("ejs");
+
+mime.types['ejs'] = mime.lookup("html");
 
 const existsFile = async function (path) {
     try {
@@ -14,7 +18,6 @@ const existsFile = async function (path) {
     }
     return true;
 };
-
 
 const tls = require("tls");
 const TLSSocket = tls.TLSSocket;
@@ -37,7 +40,7 @@ async function handleRequest(request, response) {
                     response.end("Cannot GET " + path);
                     return;
                 }
-				let data = undefined;
+                let data = undefined;
                 if ((await util.promisify(fs.stat)(realpath)).isDirectory()) {
                     if (path.substr(-1) !== "/") {
                         response.writeHead(301, {
@@ -49,14 +52,23 @@ async function handleRequest(request, response) {
                     if (await existsFile(realpath + "/index.html")) {
                         realpath += "/index.html";
                     } else {
-                        response.writeHead(404, {
-                            'Content-Type': 'text/plain'
-                        });
-                        response.end("Cannot GET " + path);
-                        return;
+                        if (await existsFile(realpath + "/index.ejs")) {
+                            realpath += "/index.ejs";
+                            data = await ejs.render(await util.promisify(fs.readFile)(realpath, 'utf8'), {
+                                clan_info: __service.info,
+                                clan_war: __service.war,
+                                warlog: __service.warlog
+                            });
+                        } else {
+                            response.writeHead(404, {
+                                'Content-Type': 'text/plain'
+                            });
+                            response.end("Cannot GET " + path);
+                            return;
+                        }
                     }
                 }
-                var ext = "text/plain";
+                let ext = "text/plain";
                 response.writeHead(200, {
                     'Content-Type': ((ext = mime.lookup(ModulePath.extname(realpath))) === false ? 'text/plain' : ext)
                 });
@@ -72,11 +84,12 @@ async function handleRequest(request, response) {
     } while (false);
 }
 
-let port = process.env.PORT || 8000;
+let port = process.env.PORT || 80;
 
 http.createServer(function (request, response) {
     handleRequest(request, response)
-        .catch(e => {console.log(e);
+        .catch(e => {
+            console.log(e);
             response.writeHead(500, {
                 'Content-Type': 'text/plain'
             });
@@ -84,4 +97,13 @@ http.createServer(function (request, response) {
         });
 }).listen(port, function () {
     console.log("Server running on port " + port + ".");
+});
+
+const CRService = require(__app + "/lib/CRService");
+global.__service = new CRService(
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzMxLCJpZGVuIjoiMzE3ODA0NjQxNDczNTI3ODE5IiwibWQiOnsidXNlcm5hbWUiOiJOTE9HIiwia2V5VmVyc2lvbiI6MywiZGlzY3JpbWluYXRvciI6IjY1OTMifSwidHMiOjE1NDQyNDI2OTY0NjZ9.DRRjz6aTnGr097FPHt8sJBi-fdPHWzRt6Pa5epmEWd0', 
+    'LVRL98Q'
+);
+__service.init().then(() => {
+    __service.start();
 });
