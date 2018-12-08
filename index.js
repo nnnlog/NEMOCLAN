@@ -54,11 +54,6 @@ async function handleRequest(request, response) {
                     } else {
                         if (await existsFile(realpath + "/index.ejs")) {
                             realpath += "/index.ejs";
-                            data = await ejs.render(await util.promisify(fs.readFile)(realpath, 'utf8'), {
-                                clan_info: __service.info,
-                                clan_war: __service.war,
-                                warlog: __service.warlog
-                            });
                         } else {
                             response.writeHead(404, {
                                 'Content-Type': 'text/plain'
@@ -67,6 +62,16 @@ async function handleRequest(request, response) {
                             return;
                         }
                     }
+                }
+                if (ModulePath.extname(realpath) === ".ejs") {
+                    data = ejs.render(
+                        await util.promisify(fs.readFile)(realpath, "utf8"),
+                        {
+                            clan_info: __service.info,
+                            clan_war: __service.war,
+                            warlog: __service.warlog
+                        });
+                    console.log(data);
                 }
                 let ext = "text/plain";
                 response.writeHead(200, {
@@ -101,7 +106,7 @@ http.createServer(function (request, response) {
 
 const CRService = require(__app + "/lib/CRService");
 global.__service = new CRService(
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzMxLCJpZGVuIjoiMzE3ODA0NjQxNDczNTI3ODE5IiwibWQiOnsidXNlcm5hbWUiOiJOTE9HIiwia2V5VmVyc2lvbiI6MywiZGlzY3JpbWluYXRvciI6IjY1OTMifSwidHMiOjE1NDQyNDI2OTY0NjZ9.DRRjz6aTnGr097FPHt8sJBi-fdPHWzRt6Pa5epmEWd0', 
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzMxLCJpZGVuIjoiMzE3ODA0NjQxNDczNTI3ODE5IiwibWQiOnsidXNlcm5hbWUiOiJOTE9HIiwia2V5VmVyc2lvbiI6MywiZGlzY3JpbWluYXRvciI6IjY1OTMifSwidHMiOjE1NDQyNDI2OTY0NjZ9.DRRjz6aTnGr097FPHt8sJBi-fdPHWzRt6Pa5epmEWd0',
     'LVRL98Q'
 );
 __service.init().then(() => {
