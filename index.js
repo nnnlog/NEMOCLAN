@@ -72,6 +72,8 @@ async function handleRequest(request, response) {
     } while (false);
 }
 
+let port = process.env.PORT || 8000;
+
 http.createServer(function (request, response) {
     handleRequest(request, response)
         .catch(e => {console.log(e);
@@ -80,6 +82,6 @@ http.createServer(function (request, response) {
             });
             response.end("Internal server error");
         });
-}).listen(80, function () {
-    console.log("Server running on port 80.");
+}).listen(port, function () {
+    console.log("Server running on port " + port + ".");
 });

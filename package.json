@@ -8,5 +8,8 @@
   "dependencies": {
     "http": "^0.0.0",
     "mime-types": "^2.1.20"
-  }
+  }, 
+  "engines": {
+    "node": "10.x"
+  },
 }
