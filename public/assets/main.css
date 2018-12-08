@@ -17,6 +17,10 @@ a:hover {
     color: #ff4081;
 }
 
+#navbar a {
+	cursor: pointer;
+}
+
 .ghost-button {
     transition: 1000ms;
     padding: 10px 20px;

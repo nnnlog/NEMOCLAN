@@ -57,7 +57,7 @@
 <nav class="navbar navbar-light navbar-expand-lg" id="navbar"
      style="z-index: 10000; position: fixed; width: 100%; background-color: rgba(252, 252, 252, 1); border-bottom: 1px solid #ccc">
     <div class="container">
-        <a class="navbar-brand" href="#">NEMO CLAN</a>
+        <a class="navbar-brand" href="/">NEMO CLAN</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Open menu to toggle">
             <span class="navbar-toggler-icon"></span>
@@ -65,18 +65,18 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="">클랜 가입</a>
+                    <a class="nav-link" href="clashroyale://clanInfo?id=LVRL98Q">클랜 가입</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="/info/" id="navbar-dropdown" role="button"
+                    <a class="nav-link dropdown-toggle" id="navbar-dropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         클랜 정보
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbar-dropdown">
-                        <a class="dropdown-item" href="/war/">클랜전 진행 정보</a>
-                        <a class="dropdown-item" href="/warlog/">클랜전 기록</a>
-                        <a class="dropdown-item" onclick="updateClickedButton_menu(document.getElementById('menu_2'));">멤버
-                            목록 및 지원량</a>
+                        <a class="dropdown-item" onclick="updateClickedButton_menu(document.getElementById('menu_3'));">클랜전 진행 정보</a>
+                        <a class="dropdown-item" href="/warlog/" onclick="alert('구현 중인 기능입니다.'); return false;">클랜전 기록</a>
+                        <a class="dropdown-item" onclick="updateClickedButton_menu(document.getElementById('menu_2'));">멤버 목록 및 지원량</a>
+                        <a class="dropdown-item" href="/last/" onclick="alert('구현 중인 기능입니다.'); return false;">지난주 클랜 정보</a>
                     </div>
                 </li>
             </ul>
