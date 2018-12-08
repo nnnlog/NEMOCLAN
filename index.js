@@ -71,7 +71,6 @@ async function handleRequest(request, response) {
                             clan_war: __service.war,
                             warlog: __service.warlog
                         });
-                    console.log(data);
                 }
                 let ext = "text/plain";
                 response.writeHead(200, {
