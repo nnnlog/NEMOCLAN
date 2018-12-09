@@ -7,6 +7,7 @@ global.__path = {
 process.env.TZ = "Asia/Seoul";
 
 const http = require("http");
+const https = require("https");
 const ModulePath = require("path");
 const mime = require("mime-types");
 const util = require("util");
@@ -134,7 +135,13 @@ async function handleRequest(request, response) {
 let port = process.env.PORT || 80;
 
 http.createServer(function (request, response) {
-    handleRequest(request, response)
+    (new Promise((resolve) => {
+		response.writeHead(301, {
+                'Content-Type': 'text/plain',
+				'Location': "https://" + request.headers.host + request.url
+        });
+		response.end();
+	}))
         .catch(e => {
             console.log(e);
             response.writeHead(500, {
@@ -145,6 +152,30 @@ http.createServer(function (request, response) {
 }).listen(port, function () {
     console.log("Server running on port " + port + ".");
 });
+
+const HTTPS_ON = true;
+if (HTTPS_ON) {
+	const https_opts = {
+		cert: fs.readFileSync(__app + '/ssl/cert.pem'),
+		ca: fs.readFileSync(__app + '/ssl/ca.pem'),
+		key: fs.readFileSync(__app + '/ssl/private.pem')
+	};
+	
+	let https_port = 443;
+	https.createServer(https_opts, function (request, response) {
+		handleRequest(request, response)
+			.catch(e => {
+				console.log(e);
+				response.writeHead(500, {
+					'Content-Type': 'text/plain'
+				});
+				response.end("Internal server error");
+			});
+	}).listen(https_port, function () {
+		console.log("Server running on port " + https_port + ".");
+	});
+}
+
 
 const CRService = require(__app + "/lib/CRService");
 global.__service = new CRService(
