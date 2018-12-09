@@ -21,6 +21,10 @@ a:hover {
 	cursor: pointer;
 }
 
+a.custom-a-color[href] {
+    color: #00BCD4;
+}
+
 .ghost-button {
     transition: 1000ms;
     padding: 10px 20px;

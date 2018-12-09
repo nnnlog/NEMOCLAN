@@ -1,4 +1,8 @@
 global.__app = __dirname;
+global.__path = {
+    navbar_component: __app + '/components/navbar.ejs',
+    copyright_component: __app + '/components/copyright.ejs'
+};
 process.env.TZ = "Asia/Seoul";
 
 const http = require("http");
@@ -67,6 +71,11 @@ async function handleRequest(request, response) {
                     data = ejs.render(
                         await util.promisify(fs.readFile)(realpath, "utf8"),
                         {
+                            fs: fs,
+                            util: util,
+                            ejs: ejs,
+
+                            path: path,
                             clan_info: __service.info,
                             clan_war: __service.war,
                             warlog: __service.warlog
