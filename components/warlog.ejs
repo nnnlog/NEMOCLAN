@@ -1,5 +1,13 @@
 <%
- let warDate = path.split("/").pop();
+let warDate = path.split("/").pop();
+let rank = 0, my_clan = undefined;
+for (let clan of war['standings']) {
+    ++rank;
+    if (clan['tag'] === clan_info['tag']) {
+        my_clan = clan;
+        break;
+    }
+}
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -13,15 +21,15 @@
 
     <!-- Site Information -->
     <meta name="description" content="클래시 로얄 NEMO 클랜 | 전쟁일 기록">
-    <link rel="canonical" href="https://nemoclan.ml/<%- path %>">
-    <meta property="al:web:url" content="https://nemoclan.ml/<%- path %>">
+    <link rel="canonical" href="https://nemoclan.ml<%- path %>">
+    <meta property="al:web:url" content="https://nemoclan.ml<%- path %>">
 
     <!-- open graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="클래시 로얄: NEMO 클랜 | 전쟁일 기록">
     <meta property="og:description" content="<%- (new Date(warDate * 1000)).toLocaleDateString() %>에 종료된 전쟁에 대한 기록">
     <meta property="og:image" content="https://nemoclan.ml/images/logo.png">
-    <meta property="og:url" content="https://nemoclan.ml/<%- path %>">
+    <meta property="og:url" content="https://nemoclan.ml<%- path %>">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -65,37 +73,106 @@
             position: fixed;
             z-index: -10;
         }
+
+        table * {
+            text-align: center;
+            vertical-align: auto;
+        }
     </style>
 
-	
-	<meta name="naver-site-verification" content="6ecbc4acfc7912f9f84978b91cbf0e7982716669"/>
+
+    <meta name="naver-site-verification" content="6ecbc4acfc7912f9f84978b91cbf0e7982716669"/>
 </head>
 <body>
 <section style="min-height: 100%; position: relative;">
 
     <%- ejs.render(fs.readFileSync(__path.navbar_component, 'utf8')) %>
-    <div class="container">
-        <h1 style="padding-top: 50px; padding-bottom: 10px; border-bottom: 1px solid white; margin-bottom: 20px; font-size: 3em;">
-            NEMO</h1>
-        <br>
-        <!--<button class="ghost-button" onclick="location.replace(getURL('/info/'));">클랜 정보</button>-->
-        <p>NEMO 클랜 공식 홈페이지에 오신 것을 환영합니다!</p>
-
-        <div class="menu-bar" style="margin-top: 50px;">
-            <div class="list" id="menuList">
-                <a class="active" onclick="updateClickedButton_menu(this)" id="menu_1"><p>클랜 소개</p></a>
-                <a onclick="updateClickedButton_menu(this)" id="menu_2"><p>클랜 정보</p></a>
-                <a onclick="updateClickedButton_menu(this)" id="menu_3"><p>클랜전</p></a>
-            </div>
-            <div class="menu">
-                <a href="https://github.com/nnnlog/"><i class="fab fa-github"></i></a>
-            </div>
-        </div>
+    <div class="container" style="margin-top: 50px;">
 
         <section class="info-section" id="articleList">
             <article class="article" id="article_1">
-                <h6 style="font-size: 95%; font-weight: bold;">클랜 소개</h6>
+                <h6 style="font-size: 95%; font-weight: bold;">전쟁일 기록</h6>
                 <hr color="white">
+                <table class="table table-bordered table-hover" style="font-weight: bold; margin-top: 40px;">
+                    <tbody style="vertical-align: inherit;">
+                    <tr>
+                        <td style="vertical-align: inherit;">전쟁 종료일</td>
+                        <td style="vertical-align: inherit;"><%- (new Date(warDate * 1000)).toLocaleString() %></td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: inherit;">순위</td>
+                        <td style="vertical-align: inherit;"><%- rank %>등</td>
+                    </tr>
+                    <tr>
+                        <td>획득 트로피</td>
+                        <td><%- (my_clan['warTrophiesChange'] > 0 ? "+" : "") + my_clan['warTrophiesChange'] %></td>
+                    </tr>
+                    <tr>
+                        <td>트로피 결과</td>
+                        <td><%- my_clan['warTrophies'] %></td>
+                    </tr>
+                    <tr>
+                        <td>총 참가자 수 (총 플레이 수)</td>
+                        <td><%- my_clan['participants'] %> (<%- my_clan['battlesPlayed'] %>)</td>
+                    </tr>
+                    <tr>
+                        <td>이긴 수 (크라운 수)</td>
+                        <td><%- my_clan['wins'] %> (<%- my_clan['crowns'] %>)</td>
+                    </tr>
+                    <tr>
+                        <td>클랜전 시즌</td>
+                        <td><%- war['seasonNumber'] %>번째 시즌</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+                <h6 style="font-size: 95%; font-weight: bold; margin-top: 40px;">클랜 목록</h6>
+                <hr color="white">
+                <table class="table border table-hover" style="font-weight: bold; margin-top: 40px;">
+                    <thead>
+                    <tr>
+                        <th scope="col" style="vertical-align: inherit;">이름</th>
+                        <th scope="col" style="vertical-align: inherit;">획득 트로피</th>
+                        <th scope="col" style="vertical-align: inherit;">이긴 수 (플레이 수)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <%
+                    let result = "";
+                    for (let clan of war['standings']) {
+                        result += "<tr><th scope='row'>" + clan['name'] + "</th>";
+                        result += "<td>" +  (clan['warTrophiesChange'] > 0 ? "+" : "") + clan['warTrophiesChange'] + "</td>";
+                        result += "<td>" + clan['wins'] + " (" + clan['crowns'] + ")</td></tr>";
+                    }
+                    %>
+                    <%- result %>
+                    </tbody>
+                </table>
+
+
+                <h6 style="font-size: 95%; font-weight: bold; margin-top: 40px;">참가자 목록</h6>
+                <hr color="white">
+                <table class="table border table-hover" style="font-weight: bold; margin-top: 40px;">
+                    <thead>
+                    <tr>
+                        <th scope="col" style="vertical-align: inherit;">이름</th>
+                        <th scope="col" style="vertical-align: inherit;">카드 수집 (수집일 플레이 수)</th>
+                        <th scope="col" style="vertical-align: inherit;">이긴 수 (플레이 수)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <%
+                    result = "";
+                    for (let player of war['participants']) {
+                        result += "<tr><th scope='row'>" + player['name'] + "</th>";
+                        result += "<td>" + player['cardsEarned'] + " (" + player['collectionDayBattlesPlayed'] + ")</td>";
+                        result += "<td>" + player['wins'] + " (" + player['battlesPlayed'] + ")</td></tr>";
+                    }
+                    %>
+                    <%- result %>
+                    </tbody>
+                </table>
             </article>
         </section>
     </div>

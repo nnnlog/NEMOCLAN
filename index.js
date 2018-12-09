@@ -1,7 +1,8 @@
 global.__app = __dirname;
 global.__path = {
     navbar_component: __app + '/components/navbar.ejs',
-    copyright_component: __app + '/components/copyright.ejs'
+    copyright_component: __app + '/components/copyright.ejs',
+    warlog_component: __app + '/components/warlog.ejs'
 };
 process.env.TZ = "Asia/Seoul";
 
@@ -89,6 +90,39 @@ async function handleRequest(request, response) {
                 response.end(content);
             }
         } else {
+            let path_slice = path.split("/");
+            path_slice.shift();
+            path_slice = Object.values(path_slice);
+            if (path_slice[0] === "warlog") {
+                if (path_slice.hasOwnProperty(1) && (!path_slice.hasOwnProperty(2) || path_slice[2] === '')) {
+                    let warDate = path_slice[1], requested_war = undefined;
+                    for (let war of __service.warlog) {
+                        if (war['createdDate'] == warDate) {
+                            requested_war = war;
+                            break;
+                        }
+                    }
+                    if (requested_war !== undefined) {
+                        let data = ejs.render(await util.promisify(fs.readFile)(__path.warlog_component, "utf8"),
+                            {
+                                warDate: warDate,
+
+                                fs: fs,
+                                util: util,
+                                ejs: ejs,
+
+                                path: path,
+                                clan_info: __service.info,
+                                war: requested_war
+                            });
+                        response.writeHead(200, {
+                            'Content-Type': (mime.lookup("html"))
+                        });
+                        response.end(data);
+                        break;
+                    }
+                }
+            }
             response.writeHead(404, {
                 'Content-Type': 'text/plain'
             });
