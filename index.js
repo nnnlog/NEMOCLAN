@@ -136,6 +136,10 @@ async function handleRequest(request, response) {
 
 const HTTPS_ON = true;
 var USING_HTTPS = HTTPS_ON;
+
+
+let port = process.env.PORT || 80; //support heroku
+
 if (HTTPS_ON && port === 80) { //when not heroku, turn on https server
     const https_opts = {
         cert: fs.readFileSync(__app + '/ssl/cert.pem'),
@@ -158,9 +162,6 @@ if (HTTPS_ON && port === 80) { //when not heroku, turn on https server
         console.log("Server running on port " + https_port + ".");
     });
 }
-
-
-let port = process.env.PORT || 80; //support heroku
 
 http.createServer(function (request, response) {
     if (USING_HTTPS) {
