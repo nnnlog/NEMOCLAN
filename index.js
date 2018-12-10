@@ -126,9 +126,12 @@ async function handleRequest(request, response) {
                 }
             }
             response.writeHead(404, {
-                'Content-Type': 'text/plain'
+                'Content-Type': 'text/html'
             });
-            response.end(await util.promisify(fs.readFile)(__path.notfound_component, 'utf8'));
+            response.end(ejs.render(await util.promisify(fs.readFile)(__path.notfound_component, 'utf8'), {
+                fs: fs,
+                ejs: ejs
+            }));
             //response.end("Cannot GET " + path);
         }
     } while (false);
@@ -136,7 +139,6 @@ async function handleRequest(request, response) {
 
 const HTTPS_ON = true;
 var USING_HTTPS = HTTPS_ON;
-
 
 let port = process.env.PORT || 80; //support heroku
 
