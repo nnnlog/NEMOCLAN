@@ -1,77 +1,42 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-
-
-<url>
-  <loc>https://nemoclan.ml/</loc>
-  <lastmod>2018-12-09T14:06:41+00:00</lastmod>
-  <priority>1.00</priority>
-</url>
-<url>
-  <loc>https://nemoclan.ml/warlog/</loc>
-  <lastmod>2018-12-09T14:06:41+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://nemoclan.ml/last/</loc>
-  <lastmod>2018-12-09T14:06:41+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://nemoclan.ml/warlog/1542451734</loc>
-  <lastmod>2018-12-09T14:06:41+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nemoclan.ml/warlog/1542190207</loc>
-  <lastmod>2018-12-09T14:06:41+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nemoclan.ml/warlog/1542017096</loc>
-  <lastmod>2018-12-09T14:06:41+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nemoclan.ml/warlog/1541764167</loc>
-  <lastmod>2018-12-09T14:06:41+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nemoclan.ml/warlog/1541590611</loc>
-  <lastmod>2018-12-09T14:06:41+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nemoclan.ml/warlog/1541331368</loc>
-  <lastmod>2018-12-09T14:06:41+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nemoclan.ml/warlog/1541155998</loc>
-  <lastmod>2018-12-09T14:06:41+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nemoclan.ml/warlog/1540983052</loc>
-  <lastmod>2018-12-09T14:06:41+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nemoclan.ml/warlog/1540724350</loc>
-  <lastmod>2018-12-09T14:06:41+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nemoclan.ml/warlog/1540549843</loc>
-  <lastmod>2018-12-09T14:06:41+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-
-
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://nemoclan.ml/</loc>
+  </url>
+  <url>
+    <loc>https://nemoclan.ml/warlog/</loc>
+  </url>
+  <url>
+    <loc>https://nemoclan.ml/last/</loc>
+  </url>
+  <url>
+    <loc>https://nemoclan.ml/warlog/1542451734</loc>
+  </url>
+  <url>
+    <loc>https://nemoclan.ml/warlog/1542190207</loc>
+  </url>
+  <url>
+    <loc>https://nemoclan.ml/warlog/1542017096</loc>
+  </url>
+  <url>
+    <loc>https://nemoclan.ml/warlog/1541764167</loc>
+  </url>
+  <url>
+    <loc>https://nemoclan.ml/warlog/1541590611</loc>
+  </url>
+  <url>
+    <loc>https://nemoclan.ml/warlog/1541331368</loc>
+  </url>
+  <url>
+    <loc>https://nemoclan.ml/warlog/1541155998</loc>
+  </url>
+  <url>
+    <loc>https://nemoclan.ml/warlog/1540983052</loc>
+  </url>
+  <url>
+    <loc>https://nemoclan.ml/warlog/1540724350</loc>
+  </url>
+  <url>
+    <loc>https://nemoclan.ml/warlog/1540549843</loc>
+  </url>
 </urlset>

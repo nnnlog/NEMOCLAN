@@ -2,7 +2,8 @@ global.__app = __dirname;
 global.__path = {
     navbar_component: __app + '/components/navbar.ejs',
     copyright_component: __app + '/components/copyright.ejs',
-    warlog_component: __app + '/components/warlog.ejs'
+    warlog_component: __app + '/components/warlog.ejs',
+    notfound_component: __app + '/components/404.html'
 };
 process.env.TZ = "Asia/Seoul";
 
@@ -127,55 +128,68 @@ async function handleRequest(request, response) {
             response.writeHead(404, {
                 'Content-Type': 'text/plain'
             });
-            response.end("Cannot GET " + path);
+            response.end(await util.promisify(fs.readFile)(__path.notfound_component, 'utf8'));
+            //response.end("Cannot GET " + path);
         }
     } while (false);
 }
 
-let port = process.env.PORT || 80;
+const HTTPS_ON = true;
+var USING_HTTPS = HTTPS_ON;
+if (HTTPS_ON && port === 80) { //when not heroku, turn on https server
+    const https_opts = {
+        cert: fs.readFileSync(__app + '/ssl/cert.pem'),
+        ca: fs.readFileSync(__app + '/ssl/ca.pem'),
+        key: fs.readFileSync(__app + '/ssl/private.pem')
+    };
+
+    let https_port = 443;
+    https.createServer(https_opts, function (request, response) {
+        handleRequest(request, response)
+            .catch(e => {
+                console.log(e);
+                response.writeHead(500, {
+                    'Content-Type': 'text/plain'
+                });
+                response.end("Internal server error");
+            });
+    }).listen(https_port, function () {
+        USING_HTTPS = true;
+        console.log("Server running on port " + https_port + ".");
+    });
+}
+
+
+let port = process.env.PORT || 80; //support heroku
 
 http.createServer(function (request, response) {
-    (new Promise((resolve) => {
-		response.writeHead(301, {
-                'Content-Type': 'text/plain',
-				'Location': "https://" + request.headers.host + request.url
-        });
-		response.end();
-	}))
-        .catch(e => {
-            console.log(e);
-            response.writeHead(500, {
-                'Content-Type': 'text/plain'
+    if (USING_HTTPS) {
+        handleRequest(request, response).catch(e => {
+                console.log(e);
+                response.writeHead(500, {
+                    'Content-Type': 'text/plain'
+                });
+                response.end("Internal server error");
             });
-            response.end("Internal server error");
-        });
+    } else {
+        (new Promise((resolve) => {
+            response.writeHead(301, {
+                'Content-Type': 'text/plain',
+                'Location': "https://" + request.headers.host + request.url
+            });
+            response.end();
+        }))
+            .catch(e => {
+                console.log(e);
+                response.writeHead(500, {
+                    'Content-Type': 'text/plain'
+                });
+                response.end("Internal server error");
+            });
+    }
 }).listen(port, function () {
     console.log("Server running on port " + port + ".");
 });
-
-const HTTPS_ON = true;
-if (HTTPS_ON) {
-	const https_opts = {
-		cert: fs.readFileSync(__app + '/ssl/cert.pem'),
-		ca: fs.readFileSync(__app + '/ssl/ca.pem'),
-		key: fs.readFileSync(__app + '/ssl/private.pem')
-	};
-	
-	let https_port = 443;
-	https.createServer(https_opts, function (request, response) {
-		handleRequest(request, response)
-			.catch(e => {
-				console.log(e);
-				response.writeHead(500, {
-					'Content-Type': 'text/plain'
-				});
-				response.end("Internal server error");
-			});
-	}).listen(https_port, function () {
-		console.log("Server running on port " + https_port + ".");
-	});
-}
-
 
 const CRService = require(__app + "/lib/CRService");
 global.__service = new CRService(

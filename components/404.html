@@ -1,24 +1,24 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>NEMO CLAN | HOME</title>
+    <title>NEMO CLAN | 404</title>
 
     <!-- Site Setting -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="theme-color" content="#37474f">
 
     <!-- Site Information -->
-    <meta name="description" content="클래시 로얄 NEMO 클랜 | 전쟁일 목록">
-    <link rel="canonical" href="https://nemoclan.ml/warlog/">
-    <meta property="al:web:url" content="https://nemoclan.ml/warlog/">
+    <meta name="description" content="페이지가 존재하지 않습니다.">
+    <link rel="canonical" href="https://nemoclan.ml/">
+    <meta property="al:web:url" content="https://nemoclan.ml/">
 
     <!-- open graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="클래시 로얄: NEMO 클랜 | 전쟁일 목록">
-    <meta property="og:description" content="클래시 로얄 NEMO 클랜">
+    <meta property="og:title" content="클래시 로얄: NEMO 클랜">
+    <meta property="og:description" content="페이지가 존재하지 않습니다.">
     <meta property="og:image" content="https://nemoclan.ml/images/logo.gif">
-    <meta property="og:url" content="https://nemoclan.ml/warlog/">
+    <meta property="og:url" content="https://nemoclan.ml/">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -64,61 +64,26 @@
         }
     </style>
 
-	
-	<meta name="naver-site-verification" content="6ecbc4acfc7912f9f84978b91cbf0e7982716669"/>
+    <meta name="naver-site-verification" content="6ecbc4acfc7912f9f84978b91cbf0e7982716669"/>
 </head>
 <body>
 
 <section style="min-height: 100%; position: relative;">
     <%- ejs.render(fs.readFileSync(__path.navbar_component, 'utf8')) %>
-    <div class="container">
-        <!--<h1 style="padding-top: 50px; padding-bottom: 10px; border-bottom: 1px solid white; margin-bottom: 20px; font-size: 3em;">
-            NEMO</h1>
-        <br>
-        <p>NEMO 클랜 공식 홈페이지에 오신 것을 환영합니다!</p>-->
 
-        <section class="info-section" id="articleList" style="margin-top: 50px;">
+        <section class="info-section" id="articleList">
             <article class="article" id="article_1">
-                <h6 style="font-size: 95%; font-weight: bold;">전쟁일 기록</h6>
+                <h6 style="font-size: 95%; font-weight: bold;">클랜 소개</h6>
                 <hr color="white">
-                <table class="table border table-hover" style="font-weight: bold; margin-top: 40px;">
-                    <thead>
-                    <tr>
-                        <th scope="col">전쟁 종료일</th>
-                        <th scope="col">등수</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <!--<tr>
-                    <th scope="row">클랜 태그</th>
-                    <td><%- clan_info["tag"] %></td>
-                </tr>-->
-                    <%
-                    process.env.TZ = "Asia/Seoul";
-                    let result = "";
+                존재하지 않는 페이지입니다.
 
-                    for (let war of warlog) {
-                        result += "<tr style='cursor: pointer;' onclick='location.replace(getURL(\"/warlog/" + war['createdDate'] + "\"));'><th scope='row'><a href='/warlog/" + war['createdDate'] + "'>" + (new Date(war['createdDate'] * 1000)).toLocaleDateString() + "</a></th>";
-                        let rank = 0;
-                        for (let clan of war['standings']) {
-                            ++rank;
-                            if (clan['tag'] === clan_info['tag']) {
-                                break;
-                            }
-                        }
-                        result += "<td><a href='/warlog/" + war['createdDate'] + "'>" + rank + "등</a></td></tr>";
-                    }
-                    %>
-                    <%- result %>
-                    </tbody>
-                </table>
+                <ul><li><a href="/">메인 사이트로 돌아가기</a></li></ul>
             </article>
         </section>
     </div>
 
     <%- ejs.render(fs.readFileSync(__path.copyright_component, 'utf8')); %>
 </section>
-
 
 </body>
 </html>
